@@ -160,18 +160,18 @@ h1{font-family:'Baloo 2',cursive;font-weight:800;color:var(--berry);font-size:cl
   75%{transform:translateX(-50%) scale(1.05) rotate(12deg)}
 }
 
-/* sign the bears hold */
+/* the bears' note — hangs just under the bottom shelf */
 .sign{
-  position:absolute;bottom:26%;left:50%;transform:translateX(-50%);
-  width:88%;max-width:430px;z-index:5;
+  position:absolute;top:46%;left:50%;transform:translateX(-50%);
+  width:80%;max-width:400px;z-index:2;
   background:var(--cream);border:3px solid var(--rose);border-radius:18px;
-  padding:12px 16px;box-shadow:var(--shadow);
-  font-weight:800;color:var(--plum);font-size:clamp(.85rem,3.4vw,1.05rem);
+  padding:10px 14px;box-shadow:var(--shadow);
+  font-weight:800;color:var(--plum);font-size:clamp(.78rem,3vw,.98rem);
   transition:opacity .3s, transform .3s;
 }
-.sign::after{ /* stick */
-  content:"";position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);
-  width:10px;height:28px;background:#e8a7bf;border-radius:5px;z-index:-1;
+.sign::before{ /* little string tying it to the shelf */
+  content:"";position:absolute;left:50%;top:-14px;transform:translateX(-50%);
+  width:4px;height:14px;background:#e8a7bf;border-radius:2px;
 }
 .sign.lowered{opacity:0;transform:translateX(-50%) translateY(24px)}
 
@@ -256,6 +256,7 @@ h1{font-family:'Baloo 2',cursive;font-weight:800;color:var(--berry);font-size:cl
     <div class="shelf s1"></div>
     <div class="shelf s2"></div>
     <div class="rug"></div>
+    <div class="sign" id="sign"></div>
 
     <!-- items get placed here by JS -->
 
@@ -263,7 +264,6 @@ h1{font-family:'Baloo 2',cursive;font-weight:800;color:var(--berry);font-size:cl
       <div class="bubble" id="bubble"></div>
       <span class="held-item" id="held-item"></span>
       <img class="buddy" id="buddy" src="bubu-dudu-hug.gif" alt="two little bears cuddling">
-      <div class="sign" id="sign"></div>
     </div>
   </div>
   <p class="tiny-note">made with ♥ just for you</p>
@@ -295,13 +295,13 @@ const CONFIG = {
 
   // The big reveal — your actual letter. Line breaks are kept.
   LETTER_TITLE: "found it!! this one's for you",
-  LETTER_MESSAGE: `hi my perfect girl,
+  LETTER_MESSAGE: `Hi my perfect girl!
 
 I built this website for you to show how thankful I am that you're in my life.
 
 You make every day softer and brighter, and I'm so lucky I get to be yours.
 
-I wish I could hold you right now so I added these bears cuddling to give you a visual.`,
+I wish I could kiss you right now so I added these bears instead to give you a visual.`,
   LETTER_SIGNED: "— your good boy, I hope 💗",
 
   // What bun says when handed the WRONG items (matched by emoji below):
