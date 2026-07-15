@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>a little something for you 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blush:#ffe8f0;
+  --blush-deep:#ffd3e2;
+  --cream:#fff9fb;
+  --rose:#f27da8;
+  --berry:#d9497e;
+  --plum:#6b3a4e;
+  --plum-soft:#a06b80;
+  --gold:#f7c873;
+  --shadow:0 10px 30px rgba(217,73,126,.16);
+  --radius:26px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Nunito',sans-serif;
+  color:var(--plum);
+  background:
+    radial-gradient(circle at 15% 20%, #ffd9e6 0 6px, transparent 7px),
+    radial-gradient(circle at 80% 60%, #ffd9e6 0 5px, transparent 6px),
+    radial-gradient(circle at 45% 85%, #ffd9e6 0 4px, transparent 5px),
+    var(--blush);
+  background-size:220px 220px, 260px 260px, 180px 180px, auto;
+  overflow-x:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible{outline:3px solid var(--berry);outline-offset:3px;border-radius:14px}
+
+.screen{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.hidden{display:none !important}
+
+h1{font-family:'Baloo 2',cursive;font-weight:800;color:var(--berry);font-size:clamp(1.6rem,5vw,2.4rem);line-height:1.15}
+.sub{color:var(--plum-soft);font-weight:600;margin-top:6px}
+
+/* ---------- PIN SCREEN ---------- */
+.pin-card{
+  background:var(--cream);border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:34px 30px 30px;max-width:360px;width:100%;
+}
+.pin-dots{display:flex;gap:16px;justify-content:center;margin:26px 0 22px;min-height:28px}
+.pin-dot{font-size:1.4rem;opacity:.22;transition:opacity .15s, transform .15s}
+.pin-dot.filled{opacity:1;transform:scale(1.15)}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pin-key{
+  background:var(--blush);border-radius:18px;padding:16px 0;
+  font-family:'Baloo 2',cursive;font-size:1.35rem;font-weight:700;color:var(--berry);
+  transition:transform .08s, background .12s;
+  border:2px solid transparent;
+}
+.pin-key:active{transform:scale(.93);background:var(--blush-deep)}
+.pin-key.util{font-size:1rem;color:var(--plum-soft)}
+.pin-hint{margin-top:18px;font-size:.85rem;color:var(--plum-soft);font-style:italic}
+.pin-error{color:var(--berry);font-weight:800;font-size:.9rem;min-height:1.3em;margin-top:12px;opacity:0;transition:opacity .2s}
+.pin-error.show{opacity:1}
+.pin-card.shake{animation:shake .45s}
+@keyframes shake{
+  10%,90%{transform:translateX(-2px)} 20%,80%{transform:translateX(4px)}
+  30%,50%,70%{transform:translateX(-7px)} 40%,60%{transform:translateX(7px)}
+}
+
+/* ---------- ROOM SCREEN ---------- */
+#room-screen{justify-content:flex-start;padding-top:28px;gap:8px}
+.room{
+  position:relative;width:min(560px,94vw);
+  background:linear-gradient(#fff2f7 0 62%, #ffdce8 62% 100%);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  border:3px solid #ffc9dc;
+  margin-top:14px;
+  aspect-ratio:4/5;
+  max-height:72dvh;
+  overflow:hidden;
+}
+/* wallpaper hearts */
+.room::before{
+  content:"";position:absolute;inset:0 0 38% 0;
+  background:radial-gradient(circle at 30% 40%, #ffd3e2 0 5px, transparent 6px),
+             radial-gradient(circle at 70% 70%, #ffd3e2 0 4px, transparent 5px);
+  background-size:90px 90px, 120px 120px;opacity:.6;pointer-events:none;
+}
+.shelf{
+  position:absolute;left:6%;right:6%;height:10px;border-radius:6px;
+  background:#e8a7bf;box-shadow:0 4px 0 #d98fac;
+}
+.shelf.s1{top:22%}
+.shelf.s2{top:44%}
+.window{
+  position:absolute;top:6%;right:8%;width:22%;aspect-ratio:1;
+  background:linear-gradient(#cfe6ff,#eaf4ff);border-radius:50% 50% 12px 12px;
+  border:5px solid #f0b7cc;box-shadow:inset 0 0 0 2px #fff;
+}
+.window::after{content:"🌙";position:absolute;inset:0;display:grid;place-items:center;font-size:1.4rem}
+.rug{
+  position:absolute;bottom:3%;left:50%;transform:translateX(-50%);
+  width:78%;height:9%;background:#f9b8cf;border-radius:50%;
+  box-shadow:inset 0 -6px 0 #f2a3c0;
+}
+
+/* items */
+.item{
+  position:absolute;font-size:clamp(1.7rem,7vw,2.5rem);line-height:1;
+  transition:transform .15s;filter:drop-shadow(0 3px 3px rgba(217,73,126,.25));
+  z-index:3;
+}
+.item:hover{transform:scale(1.12) rotate(-6deg)}
+.item:active{transform:scale(.9)}
+.item.gone{visibility:hidden}
+.item.rejected{animation:plop .5s}
+@keyframes plop{
+  0%{transform:translateY(-14px) scale(.8);opacity:0}
+  60%{transform:translateY(3px) scale(1.05);opacity:1}
+  100%{transform:none}
+}
+
+/* the bears */
+.buddy-wrap{position:absolute;bottom:4%;left:50%;transform:translateX(-50%);width:48%;max-width:240px;z-index:4}
+.buddy{
+  width:100%;display:block;
+  mix-blend-mode:multiply; /* melts the white GIF background into the pink room */
+  transform-origin:bottom center;
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.buddy.holding{transform:scale(1.06) translateY(-6px)}
+.buddy.nope{animation:headshake .6s}
+@keyframes headshake{
+  20%{transform:translateX(-6px) rotate(-4deg)} 40%{transform:translateX(6px) rotate(4deg)}
+  60%{transform:translateX(-4px) rotate(-3deg)} 80%{transform:translateX(3px) rotate(2deg)}
+}
+.buddy-wrap.hop{animation:hop .5s}
+@keyframes hop{30%{transform:translateX(-50%) translateY(-14px)}60%{transform:translateX(-50%) translateY(0)}80%{transform:translateX(-50%) translateY(-6px)}}
+.pin-buddy{
+  width:130px;max-width:45%;margin:18px auto 0;display:block;
+  mix-blend-mode:multiply;
+}
+.letter-buddy{
+  width:150px;max-width:55%;margin:0 auto 4px;display:block;
+  mix-blend-mode:multiply;
+}
+
+/* item held above head */
+.held-item{
+  position:absolute;left:50%;top:-14%;transform:translateX(-50%) scale(0);
+  font-size:clamp(1.9rem,8vw,2.8rem);transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  filter:drop-shadow(0 4px 4px rgba(217,73,126,.3));
+}
+.held-item.show{transform:translateX(-50%) scale(1)}
+.held-item.show.wiggle{animation:wiggle 1s .4s}
+@keyframes wiggle{
+  0%,100%{transform:translateX(-50%) scale(1) rotate(0)}
+  25%{transform:translateX(-50%) scale(1.05) rotate(-12deg)}
+  75%{transform:translateX(-50%) scale(1.05) rotate(12deg)}
+}
+
+/* sign the bears hold */
+.sign{
+  position:absolute;bottom:26%;left:50%;transform:translateX(-50%);
+  width:88%;max-width:430px;z-index:5;
+  background:var(--cream);border:3px solid var(--rose);border-radius:18px;
+  padding:12px 16px;box-shadow:var(--shadow);
+  font-weight:800;color:var(--plum);font-size:clamp(.85rem,3.4vw,1.05rem);
+  transition:opacity .3s, transform .3s;
+}
+.sign::after{ /* stick */
+  content:"";position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);
+  width:10px;height:28px;background:#e8a7bf;border-radius:5px;z-index:-1;
+}
+.sign.lowered{opacity:0;transform:translateX(-50%) translateY(24px)}
+
+/* speech bubble */
+.bubble{
+  position:absolute;bottom:70%;left:50%;transform:translateX(-50%) scale(0);
+  background:#fff;border:3px solid var(--rose);border-radius:18px;
+  padding:9px 14px;font-weight:800;color:var(--berry);white-space:nowrap;
+  font-size:clamp(.8rem,3.2vw,.95rem);z-index:6;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.bubble::after{
+  content:"";position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+  border:8px solid transparent;border-top-color:var(--rose);
+}
+.bubble.show{transform:translateX(-50%) scale(1)}
+
+/* ---------- LETTER OVERLAY ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(217,73,126,.32);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;padding:20px;z-index:50;
+  opacity:0;pointer-events:none;transition:opacity .4s;
+}
+.overlay.show{opacity:1;pointer-events:auto}
+.letter{
+  background:var(--cream);border-radius:var(--radius);box-shadow:0 20px 60px rgba(107,58,78,.35);
+  max-width:440px;width:100%;padding:36px 30px;text-align:center;
+  transform:scale(.7) translateY(30px);transition:transform .45s cubic-bezier(.34,1.56,.64,1);
+  max-height:85dvh;overflow-y:auto;
+  border:3px dashed var(--rose);
+}
+.overlay.show .letter{transform:none}
+.letter .stamp{font-size:2.4rem}
+.letter h2{font-family:'Baloo 2',cursive;color:var(--berry);font-size:1.5rem;margin:8px 0 16px}
+.letter p{font-size:1.02rem;line-height:1.75;white-space:pre-line;text-align:left}
+.letter .signed{margin-top:20px;font-style:italic;font-weight:800;color:var(--berry);text-align:right}
+.letter .close-btn{
+  margin-top:24px;background:var(--rose);color:#fff;font-family:'Baloo 2',cursive;
+  font-size:1.05rem;font-weight:700;padding:12px 30px;border-radius:999px;
+  box-shadow:0 6px 0 var(--berry);transition:transform .08s, box-shadow .08s;
+}
+.letter .close-btn:active{transform:translateY(4px);box-shadow:0 2px 0 var(--berry)}
+
+/* floating hearts confetti */
+.heart-bit{
+  position:fixed;top:-40px;font-size:1.4rem;z-index:60;pointer-events:none;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);opacity:.6}
+}
+
+.tiny-note{margin-top:14px;font-size:.8rem;color:var(--plum-soft)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.05s !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ PIN SCREEN ============ -->
+<main id="pin-screen" class="screen">
+  <div class="pin-card">
+    <h1 id="pin-title">psst... this is for you 🐰</h1>
+    <p class="sub" id="pin-sub">enter the secret code</p>
+    <div class="pin-dots" id="pin-dots" aria-live="polite"></div>
+    <div class="pin-pad" id="pin-pad"></div>
+    <p class="pin-error" id="pin-error">that's not it, try again! 🙈</p>
+    <p class="pin-hint" id="pin-hint"></p>
+    <img class="pin-buddy" src="dudu-alone.gif" alt="a shy little bear giggling">
+  </div>
+</main>
+
+<!-- ============ ROOM SCREEN ============ -->
+<main id="room-screen" class="screen hidden">
+  <h1 id="room-title"></h1>
+  <p class="sub">tap the things around the room to hand them to the bears 🐻🐼</p>
+
+  <div class="room" id="room">
+    <div class="window"></div>
+    <div class="shelf s1"></div>
+    <div class="shelf s2"></div>
+    <div class="rug"></div>
+
+    <!-- items get placed here by JS -->
+
+    <div class="buddy-wrap" id="buddy-wrap">
+      <div class="bubble" id="bubble"></div>
+      <span class="held-item" id="held-item"></span>
+      <img class="buddy" id="buddy" src="bubu-dudu-hug.gif" alt="two little bears cuddling">
+      <div class="sign" id="sign"></div>
+    </div>
+  </div>
+  <p class="tiny-note">made with ♥ just for you</p>
+</main>
+
+<!-- ============ LETTER OVERLAY ============ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="letter-title">
+  <div class="letter">
+    <img class="letter-buddy" src="bubu-dudu-kiss.gif" alt="the two bears kissing">
+
+    <h2 id="letter-title"></h2>
+    <p id="letter-body"></p>
+    <p class="signed" id="letter-signed"></p>
+    <button class="close-btn" id="close-letter">keep this forever 💗</button>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   ✏️  EDIT EVERYTHING IN THIS BLOCK — it's all yours
+   ══════════════════════════════════════════════════════════ */
+const CONFIG = {
+  PIN: "1234",                                   // 🔑 the secret code
+  PIN_HINT: "hint: the month + day we met 💗",   // shown under the keypad ("" to hide)
+  HER_NAME: "cutie",                             // her name / nickname
+
+  // What the bears' sign says once she's in the room:
+  SIGN_MESSAGE: "oh no... I was supposed to deliver you a letter but I lost it somewhere in this room!! can you help me find it? 🥺",
+
+  // The big reveal — your actual letter. Line breaks are kept.
+  LETTER_TITLE: "found it!! this one's for you",
+  LETTER_MESSAGE: `hi you,
+
+I know today was rough, so I built you two tiny bears who work for hugs.
+
+You make everything softer and brighter, and I'm so lucky I get to be yours. Whatever's heavy right now, we'll carry it together.
+
+I love you more than these bears love cuddles (a LOT).`,
+  LETTER_SIGNED: "— your favorite person, I hope 💗",
+
+  // What bun says when handed the WRONG items (matched by emoji below):
+  ITEMS: [
+    { emoji:"🧦", nope:"cozy!! but... not it 🙈" },
+    { emoji:"🍪", nope:"can I keep this?? ...no. focus." },
+    { emoji:"🌷", nope:"pretty like you! but nope~" },
+    { emoji:"🧸", nope:"a friend!! but not the letter..." },
+    { emoji:"🍵", nope:"*sips* ...okay okay, not it!" },
+    { emoji:"📖", nope:"too many words, none of them yours!" },
+    { emoji:"💌", nope:"" },                     // ⭐ the letter — leave this one!
+  ],
+};
+/* ══════════════════ end of edit block ══════════════════ */
+
+const $ = (id) => document.getElementById(id);
+const PIN_LEN = CONFIG.PIN.length;
+let entered = "";
+let busy = false;
+
+/* ---------- PIN pad ---------- */
+$("pin-hint").textContent = CONFIG.PIN_HINT;
+const dotsEl = $("pin-dots");
+for (let i = 0; i < PIN_LEN; i++) {
+  const d = document.createElement("span");
+  d.className = "pin-dot"; d.textContent = "💗";
+  dotsEl.appendChild(d);
+}
+const keys = ["1","2","3","4","5","6","7","8","9","clear","0","⌫"];
+const padEl = $("pin-pad");
+keys.forEach(k => {
+  const b = document.createElement("button");
+  b.className = "pin-key" + (k === "clear" || k === "⌫" ? " util" : "");
+  b.textContent = k;
+  b.setAttribute("aria-label", k === "⌫" ? "delete" : k);
+  b.addEventListener("click", () => pressKey(k));
+  padEl.appendChild(b);
+});
+document.addEventListener("keydown", (e) => {
+  if ($("pin-screen").classList.contains("hidden")) return;
+  if (/^[0-9]$/.test(e.key)) pressKey(e.key);
+  else if (e.key === "Backspace") pressKey("⌫");
+});
+function pressKey(k) {
+  $("pin-error").classList.remove("show");
+  if (k === "clear") entered = "";
+  else if (k === "⌫") entered = entered.slice(0, -1);
+  else if (entered.length < PIN_LEN) entered += k;
+  [...dotsEl.children].forEach((d, i) => d.classList.toggle("filled", i < entered.length));
+  if (entered.length === PIN_LEN) {
+    if (entered === CONFIG.PIN) setTimeout(enterRoom, 250);
+    else {
+      const card = document.querySelector(".pin-card");
+      card.classList.add("shake");
+      $("pin-error").classList.add("show");
+      setTimeout(() => { card.classList.remove("shake"); entered = "";
+        [...dotsEl.children].forEach(d => d.classList.remove("filled")); }, 500);
+    }
+  }
+}
+
+/* ---------- Room setup ---------- */
+const SPOTS = [   // % positions inside the room (left, top)
+  { x: 12, y: 14 }, { x: 30, y: 14 }, { x: 55, y: 14 },
+  { x: 14, y: 36 }, { x: 38, y: 36 }, { x: 66, y: 36 },
+  { x: 10, y: 72 },
+];
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+
+function enterRoom() {
+  $("pin-screen").classList.add("hidden");
+  $("room-screen").classList.remove("hidden");
+  $("room-title").textContent = `hi ${CONFIG.HER_NAME}!! 🎀`;
+  $("sign").textContent = CONFIG.SIGN_MESSAGE;
+
+  const room = $("room");
+  const spots = shuffle([...SPOTS]);
+  CONFIG.ITEMS.forEach((item, i) => {
+    const b = document.createElement("button");
+    b.className = "item";
+    b.textContent = item.emoji;
+    b.setAttribute("aria-label", "hand this to the bears");
+    const s = spots[i % spots.length];
+    b.style.left = s.x + "%";
+    b.style.top = s.y + "%";
+    b.addEventListener("click", () => handItem(item, b));
+    room.appendChild(b);
+  });
+}
+
+/* ---------- Handing items to the bears ---------- */
+const buddy = $("buddy"), held = $("held-item"), bubble = $("bubble"),
+      sign = $("sign"), wrap = $("buddy-wrap"), overlay = $("overlay");
+const KISS_GIF = "bubu-dudu-kiss.gif";
+
+function handItem(item, el) {
+  if (busy) return;
+  busy = true;
+  el.classList.add("gone");
+  sign.classList.add("lowered");
+
+  // the bears perk up & hold the item overhead
+  buddy.classList.add("holding");
+  held.textContent = item.emoji;
+  held.classList.add("show", "wiggle");
+
+  const isLetter = item.emoji === "💌";
+  setTimeout(() => {
+    if (isLetter) return reveal();
+    // wrong item: head shake + bubble, put it back
+    buddy.classList.add("nope");
+    bubble.textContent = item.nope || "hmm, not this one!";
+    bubble.classList.add("show");
+    setTimeout(() => {
+      buddy.classList.remove("holding", "nope");
+      held.classList.remove("show", "wiggle");
+      bubble.classList.remove("show");
+      sign.classList.remove("lowered");
+      el.classList.remove("gone");
+      el.classList.add("rejected");
+      setTimeout(() => { el.classList.remove("rejected"); busy = false; }, 500);
+    }, 1600);
+  }, 1500);
+}
+
+function reveal() {
+  held.classList.remove("show", "wiggle");
+  buddy.classList.remove("holding");
+  buddy.src = KISS_GIF;               // 💋 the bears celebrate
+  bubble.textContent = "THE LETTER!!! 🎉";
+  bubble.classList.add("show");
+  wrap.classList.add("hop");
+  heartBurst();
+  setTimeout(() => {
+    $("letter-title").textContent = CONFIG.LETTER_TITLE;
+    $("letter-body").textContent = CONFIG.LETTER_MESSAGE;
+    $("letter-signed").textContent = CONFIG.LETTER_SIGNED;
+    overlay.classList.add("show");
+  }, 1400);
+}
+
+$("close-letter").addEventListener("click", () => {
+  overlay.classList.remove("show");
+  bubble.textContent = "read it again any time 💗";
+  heartBurst(14);
+});
+
+function heartBurst(n = 30) {
+  const hearts = ["💗","💖","🌸","💕","✨"];
+  for (let i = 0; i < n; i++) {
+    const h = document.createElement("span");
+    h.className = "heart-bit";
+    h.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (0.9 + Math.random() * 1.2) + "rem";
+    h.style.animationDuration = (2.2 + Math.random() * 2.5) + "s";
+    h.style.animationDelay = (Math.random() * .8) + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }
+}
+</script>
+</body>
+</html>
